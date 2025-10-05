@@ -1,4 +1,7 @@
-from fastapi import APIRouter
+from typing import Annotated
+from fastapi import APIRouter, Depends
+from app.posts.repository import *
+from app.posts.schemas import *
 
 router = APIRouter(
     prefix='/posts',
@@ -7,6 +10,12 @@ router = APIRouter(
 )
 
 
-@router.post
-async def add_post():
-    pass
+@router.post('/add', response_model = SResponsePost)
+async def add_post(post: Annotated[SPost, Depends()]):
+    new_post = await PostsRepo.add_post(post)
+    return new_post
+
+@router.get('/get_post', response_model = SResponsePost)
+async def get_post_by_id(post_id: int):
+    current_post = await PostsRepo.get_post(post_id)
+    return current_post
