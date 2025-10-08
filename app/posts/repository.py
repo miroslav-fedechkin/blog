@@ -37,3 +37,19 @@ class PostsRepo:
             query = select(Post)
             result = await session.execute(query)
             return result.scalars().all()
+        
+
+    @classmethod
+    async def delete_post(
+        cls,
+        post_id: int
+    ):
+        async with async_session_maker() as session:
+            query = select(Post).where(Post.id == post_id)
+            result = await session.execute(query)
+            post = result.scalar_one_or_none()
+
+            deleted = await session.delete(post)
+
+            await session.commit()
+            return deleted
