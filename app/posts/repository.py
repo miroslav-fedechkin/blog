@@ -28,3 +28,12 @@ class PostsRepo:
             result = await session.execute(query)
             id = result.scalar_one_or_none()
             return id
+        
+    @classmethod
+    async def get_all_posts(
+        cls
+    ):
+        async with async_session_maker() as session:
+            query = select(Post)
+            result = await session.execute(query)
+            return result.scalars().all()
