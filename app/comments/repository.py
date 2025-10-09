@@ -17,3 +17,14 @@ class CommentsRepo:
             await session.commit()
             await session.refresh(new_comment)
             return new_comment
+        
+
+    @classmethod
+    async def get_comment_by_id(
+        cls,
+        comment_id: int
+    ):
+        async with async_session_maker() as session:
+            query = select(Comment).where(Comment.id == comment_id)
+            result = await session.execute(query)
+            return result.scalar_one_or_none()
