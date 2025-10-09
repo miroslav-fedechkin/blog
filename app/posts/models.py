@@ -1,5 +1,6 @@
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
 from app.database import Base
-from sqlalchemy import Column, Integer, String
 
 class Post(Base):
     __tablename__='posts'
@@ -7,5 +8,8 @@ class Post(Base):
     id = Column(Integer, primary_key=True)
     title = Column(String)
     content = Column(String)
+    
+    
+    comments = relationship('Comment', back_populates='post')
     
 
