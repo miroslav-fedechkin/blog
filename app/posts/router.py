@@ -20,7 +20,7 @@ async def get_post_by_id(post_id: int):
     current_post = await PostsRepo.get_post(post_id)
     return current_post
 
-@router.get('/get_all')
+@router.get('/get_all', response_model=SResponsePost)
 async def get_posts():
     posts = await PostsRepo.get_all_posts()
     return posts
