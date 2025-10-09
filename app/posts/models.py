@@ -10,6 +10,6 @@ class Post(Base):
     content = Column(String)
     
     
-    comments = relationship('Comment', back_populates='post')
+    comments = relationship('Comment', back_populates='posts')
     
 
